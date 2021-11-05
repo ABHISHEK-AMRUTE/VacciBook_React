@@ -329,7 +329,7 @@ class App extends Component {
       </TableHead>
       <TableBody>
 
-        {this.state.list.map(element => {
+        {   this.state.list.map(element => {
           const dose1_st = `${element.available_capacity_dose1}`
           const dose2_st = `${element.available_capacity_dose2}`
           const age_allowed = `${element.min_age_limit} +`
