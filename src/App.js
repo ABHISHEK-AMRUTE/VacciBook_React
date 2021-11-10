@@ -1,7 +1,4 @@
 import './App.css';
-
-
-
 import { AccordionSummary, AccordionDetails, Accordion, FormControl, InputLabel, Chip, Select, AppBar, Toolbar, IconButton, Button, Paper, makeStyles, TextField, Grid } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { Component } from 'react';
@@ -17,10 +14,14 @@ import TableRow from '@material-ui/core/TableRow';
 
 class App extends Component {
 
+  // Constructor of App class
 
   constructor() {
+
+    // Call the super class constructor
     super()
 
+    // Permissions for notifications
     navigator.serviceWorker.register('sw.js');
     Notification.requestPermission(function (result) {
       navigator.serviceWorker.ready.then(function (registration) {
@@ -35,6 +36,9 @@ class App extends Component {
     var date = new Date();
     var formatedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`
     console.log(formatedDate)
+
+
+    // Initialize the state of the App class
     this.state = {
       pincode: "460001",
       date: formatedDate,
@@ -47,136 +51,152 @@ class App extends Component {
       doRing: false,
       audioTimer: '',
       checkTimer: '',
-      timerOn: false
+      timerOn: false,
+      pincodeError: false,
+      dateError: false,
 
 
     }
+    // Dummy Data for testing purpose
+    // this.state.list = [{
+    //   "center_id": 1234,
+    //   "name": "District General Hostpital",
+    //   "name_l": "",
+    //   "address": "45 M G Road",
+    //   "address_l": "",
+    //   "state_name": "Maharashtra",
+    //   "state_name_l": "",
+    //   "district_name": "Satara",
+    //   "district_name_l": "",
+    //   "block_name": "Jaoli",
+    //   "block_name_l": "",
+    //   "pincode": "413608",
+    //   "lat": 28.7,
+    //   "long": 77.1,
+    //   "from": "09:00:00",
+    //   "to": "18:00:00",
+    //   "fee_type": "Paid",
+    //   "fee": "250",
+    //   "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    //   "date": "31-05-2021",
+    //   "available_capacity": 50,
+    //   "available_capacity_dose1": 0,
+    //   "available_capacity_dose2": 25,
+    //   "min_age_limit": 18,
+    //   "vaccine": "COVISHIELD",
+    //   "slots": [
+    //     "FORENOON",
+    //     "AFTERNOON"
+    //   ]
+    // },
+    // {
+    //   "center_id": 1234,
+    //   "name": "District General Hostpital",
+    //   "name_l": "",
+    //   "address": "45 M G Road",
+    //   "address_l": "",
+    //   "state_name": "Maharashtra",
+    //   "state_name_l": "",
+    //   "district_name": "Satara",
+    //   "district_name_l": "",
+    //   "block_name": "Jaoli",
+    //   "block_name_l": "",
+    //   "pincode": "413608",
+    //   "lat": 28.7,
+    //   "long": 77.1,
+    //   "from": "09:00:00",
+    //   "to": "18:00:00",
+    //   "fee_type": "Paid",
+    //   "fee": "250",
+    //   "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    //   "date": "31-05-2021",
+    //   "available_capacity": 50,
+    //   "available_capacity_dose1": 25,
+    //   "available_capacity_dose2": 25,
+    //   "min_age_limit": 18,
+    //   "vaccine": "COVISHIELD",
+    //   "slots": [
+    //     "FORENOON",
+    //     "AFTERNOON"
+    //   ]
+    // },
+    // {
+    //   "center_id": 1234,
+    //   "name": "District General Hostpital",
+    //   "name_l": "",
+    //   "address": "45 M G Road",
+    //   "address_l": "",
+    //   "state_name": "Maharashtra",
+    //   "state_name_l": "",
+    //   "district_name": "Satara",
+    //   "district_name_l": "",
+    //   "block_name": "Jaoli",
+    //   "block_name_l": "",
+    //   "pincode": "413608",
+    //   "lat": 28.7,
+    //   "long": 77.1,
+    //   "from": "09:00:00",
+    //   "to": "18:00:00",
+    //   "fee_type": "Paid",
+    //   "fee": "250",
+    //   "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    //   "date": "31-05-2021",
+    //   "available_capacity": 50,
+    //   "available_capacity_dose1": 25,
+    //   "available_capacity_dose2": 25,
+    //   "min_age_limit": 18,
+    //   "vaccine": "COVISHIELD",
+    //   "slots": [
+    //     "FORENOON",
+    //     "AFTERNOON"
+    //   ]
+    // }];
 
-    this.state.list = [{
-      "center_id": 1234,
-      "name": "District General Hostpital",
-      "name_l": "",
-      "address": "45 M G Road",
-      "address_l": "",
-      "state_name": "Maharashtra",
-      "state_name_l": "",
-      "district_name": "Satara",
-      "district_name_l": "",
-      "block_name": "Jaoli",
-      "block_name_l": "",
-      "pincode": "413608",
-      "lat": 28.7,
-      "long": 77.1,
-      "from": "09:00:00",
-      "to": "18:00:00",
-      "fee_type": "Paid",
-      "fee": "250",
-      "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "date": "31-05-2021",
-      "available_capacity": 50,
-      "available_capacity_dose1": 0,
-      "available_capacity_dose2": 25,
-      "min_age_limit": 18,
-      "vaccine": "COVISHIELD",
-      "slots": [
-        "FORENOON",
-        "AFTERNOON"
-      ]
-    },
-    {
-      "center_id": 1234,
-      "name": "District General Hostpital",
-      "name_l": "",
-      "address": "45 M G Road",
-      "address_l": "",
-      "state_name": "Maharashtra",
-      "state_name_l": "",
-      "district_name": "Satara",
-      "district_name_l": "",
-      "block_name": "Jaoli",
-      "block_name_l": "",
-      "pincode": "413608",
-      "lat": 28.7,
-      "long": 77.1,
-      "from": "09:00:00",
-      "to": "18:00:00",
-      "fee_type": "Paid",
-      "fee": "250",
-      "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "date": "31-05-2021",
-      "available_capacity": 50,
-      "available_capacity_dose1": 25,
-      "available_capacity_dose2": 25,
-      "min_age_limit": 18,
-      "vaccine": "COVISHIELD",
-      "slots": [
-        "FORENOON",
-        "AFTERNOON"
-      ]
-    },
-    {
-      "center_id": 1234,
-      "name": "District General Hostpital",
-      "name_l": "",
-      "address": "45 M G Road",
-      "address_l": "",
-      "state_name": "Maharashtra",
-      "state_name_l": "",
-      "district_name": "Satara",
-      "district_name_l": "",
-      "block_name": "Jaoli",
-      "block_name_l": "",
-      "pincode": "413608",
-      "lat": 28.7,
-      "long": 77.1,
-      "from": "09:00:00",
-      "to": "18:00:00",
-      "fee_type": "Paid",
-      "fee": "250",
-      "session_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "date": "31-05-2021",
-      "available_capacity": 50,
-      "available_capacity_dose1": 25,
-      "available_capacity_dose2": 25,
-      "min_age_limit": 18,
-      "vaccine": "COVISHIELD",
-      "slots": [
-        "FORENOON",
-        "AFTERNOON"
-      ]
-    }];
+    // Bind the clickhandler functions of the class
     this.clickHandler = this.onButtonClicked.bind(this);
 
 
 
   }
 
+  // Function to handle Pincode change
+  onPincodeChange = (event) => {
+    if (event.target.value.length === 6)
+      this.setState({ pincode: event.target.value, pincodeError: false })
+    else
+      this.setState({ pincode: event.target.value, pincodeError: true })
+  }
 
-  onPincodeChange = (event) => { this.setState({ pincode: event.target.value }) }
+  // Function to handle Date change
   onDateChange = (event) => {
     var arr = event.target.value.split('-');
     var temp = `${arr[2]}-${arr[1]}-${arr[0]}`;
-
+    console.log(temp)
+    var flag = false;
+    if (new Date().getDate() > parseInt( arr[2]) || new Date().getMonth() > parseInt(arr[1])) flag = true;
+ 
     this.setState({
       date: event.target.value,
-      datestring: temp
+      datestring: temp,
+      dateError: flag
     })
 
   }
+
+  // Event handler for form fields
   onTimeChange = (event) => { this.setState({ time: event.target.value }) }
   onAgeChange = (event) => { this.setState({ age: event.target.value }) }
   onTypeChange = (event) => { this.setState({ type: event.target.value }) }
   onDoseChange = (event) => { this.setState({ dose: event.target.value }) }
 
 
+  //Function to clear interval when tab comes in context
   clearAudioIntervals = () => {
     clearInterval(this.state.audioTimer);
-    // if (document.visibilityState == "visible") {
-    //   console.log("Clearing audio interval timer and playback")
 
-    // }
   }
 
+  // Function to reset everything
   clearEverthing = () => {
     clearInterval(this.state.audioTimer);
     clearInterval(this.state.checkTimer);
@@ -191,32 +211,28 @@ class App extends Component {
   }
 
 
+  // Function to handle button click
   onButtonClicked = () => {
 
     this.clearEverthing()
 
-    // pincode = document.getElementById('pincode').value;
-    // var temp = new Date(document.getElementById('date').value);
-    // day = temp.getDate();
-    // month = temp.getMonth() + 1;
-    // year = temp.getFullYear()
-    // time = document.getElementById('time').value;
-    // age = document.getElementById('age').value;
 
     console.log(this.state)
 
-
+    // Defining interval for polling.
     var tempcheckTimer = setInterval(() => {
 
       console.log('checking for slots...')
       var temp = []
+      // API call to get slots
       fetch('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=' + this.state.pincode + '&date=' + this.state.datestring)
         .then(response => response.json())
         .then(data => {
 
-
+          // Ring/Push notification if slots are available
           var ifRing = this.state.doRing;
           console.log(data)
+          // Listing each slot
           data.sessions.forEach(element => {
 
 
@@ -228,6 +244,8 @@ class App extends Component {
                   console.log('inside dose')
                   ifRing = true;
                   temp.push(element)
+
+                  //firing notifications
                   navigator.serviceWorker.ready.then(function (registration) {
                     registration.showNotification('Vaccine slots are available', {
                       body: element.address + ", " + element.block_name + ", " + element.district_name + ", " + element.state_name,
@@ -239,7 +257,6 @@ class App extends Component {
               }
             }
           });
-
 
           if (ifRing) {
             console.log('wanted to ring')
@@ -298,7 +315,7 @@ class App extends Component {
     })
   }
 
-
+  // Function to track user action between tab switches
   handleVisibilityChange = isVisible => {
 
 
@@ -314,9 +331,10 @@ class App extends Component {
 
 
 
-
+  // render function return what to render on the UI.
   render() {
 
+    // 'Li' is the list of slots which is to be rendered
     const li = (<div class="glassmorphism"><Table className="table" aria-label="simple table">
       <TableHead>
         <TableRow>
@@ -329,7 +347,7 @@ class App extends Component {
       </TableHead>
       <TableBody>
 
-        {   this.state.list.map(element => {
+        {this.state.list.map(element => {
           const dose1_st = `${element.available_capacity_dose1}`
           const dose2_st = `${element.available_capacity_dose2}`
           const age_allowed = `${element.min_age_limit} +`
@@ -338,23 +356,8 @@ class App extends Component {
 
           return (
 
-            // <Paper className="papers listPaper" elevation={3} >
-            //   <Grid container>
-            //     <Grid className="gridItem" item xs={12} sm={3}>
-            //       <b>{element.name}</b> <br></br>
-            //       {element.address}, {element.district_name}, {element.state_name}
-            //     </Grid>
-            //     <Grid className="gridItem" item xs={12} sm={9}>
 
-            //       {number_of_dose_one} &nbsp; &nbsp; {number_of_dose_two} &nbsp; &nbsp; <Chip color="primary" label={age_allowed}></Chip>
-
-            //     </Grid>
-            //   </Grid>
-
-            // </Paper>
-
-
-            <TableRow >
+            <TableRow onClick={()=>{ window.open('https://www.cowin.gov.in/', '_blank');  }}>
               <TableCell component="th" scope="row">
                 <b>{element.name}</b> <br></br>
                 {element.address}, {element.district_name}, {element.state_name}
@@ -375,15 +378,16 @@ class App extends Component {
 
     var checkingDisplay = this.state.timerOn ? (
 
+      // App headers
       <div className="glassmorphism center" >
         <h1>
           VacciBook is checking for slots.
-      </h1>
-     I will notify you when any slots will be available. You can continue working. <b>Please don't close this tab, inorder to get notifications</b>
+        </h1>
+        I will notify you when any slots will be available. You can continue working. <b>Please don't close this tab, inorder to get notifications</b>
       </div>) : (<div className=" glassmorphism"  >
 
 
-
+        {/* App Body */}
         <Grid container >
           <Grid className="gridItem" item xs={12} sm={6}>
             <div className="topMargin" />
@@ -402,52 +406,75 @@ class App extends Component {
                 <li>Don't close this tab. You can work leaving this tab open sideways.</li>
               </ul>
             </Typography>
-            {/* <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
-        Want help?
-  </AccordionSummary>
-      <AccordionDetails>
-        adasd
-  </AccordionDetails>
-    </Accordion> */}
+
 
           </Grid>
+
+          {/* Main form UI */}
           <Grid className="gridItem" item xs={12} sm={6}>
 
 
             <div className="formDiv">
 
 
-            <div className="extraPadding" >
-              <TextField fullWidth className="formItemStyles" type="number" id="outlined-basic" label="Pin Code" variant="outlined" value={this.state.pincode} onChange={this.onPincodeChange} /><br></br>
-              </div>
               <div className="extraPadding" >
-              <TextField
-                value={this.state.date}
-                className="formItemStyles"
-                id="date"
-                fullWidth
 
-                onChange={this.onDateChange}
-                label="Want to book vaccine on which date?"
-                type="date"
+                {/* Pin Code text field */}
+                {this.state.pincodeError ? (
+                  <TextField error fullWidth className="formItemStyles" type="number" id="outlined-basic" label="Pin Code" variant="outlined" value={this.state.pincode} onChange={this.onPincodeChange} />
+                ) : (<TextField fullWidth className="formItemStyles" type="number" id="outlined-basic" label="Pin Code" variant="outlined" value={this.state.pincode} onChange={this.onPincodeChange} />
+                )
+                }
+                <br></br>
+              </div>
+              {/* Date Text Field */}
+              <div className="extraPadding" >
+                {
+                  this.state.dateError ? (
+                    <TextField
+                      value={this.state.date}
+                      className="formItemStyles"
+                      id="date"
+                      fullWidth
+                      error
+                      onChange={this.onDateChange}
+                      label="Want to book vaccine on which date?"
+                      type="date"
 
-                variant="outlined"
-                className="textField"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-           </div>
+                      variant="outlined"
+                      className="textField"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  ) :
+                    (
+                      <TextField
+                        value={this.state.date}
+                        className="formItemStyles"
+                        id="date"
+                        fullWidth
+
+                        onChange={this.onDateChange}
+                        label="Want to book vaccine on which date?"
+                        type="date"
+
+                        variant="outlined"
+                        className="textField"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    )
+                }
+              </div>
 
               <Grid container>
                 <Grid className="gridItem" item xs={12} sm={6}>
                   <div className="extraPadding">
                     <FormControl variant="outlined" className="formControl">
+
+                      {/* Age selector */}
                       <InputLabel htmlFor="outlined-age-native-simple">Age</InputLabel>
                       <Select
                         native
@@ -473,6 +500,8 @@ class App extends Component {
                 <Grid className="gridItem" item xs={12} sm={6}>
                   <div className="extraPadding">
                     <FormControl variant="outlined" className="formControl">
+                      {/* Vaccine type Selector */}
+
                       <InputLabel htmlFor="outlined-age-native-simple">Vaccine type</InputLabel>
                       <Select
                         native
@@ -498,35 +527,38 @@ class App extends Component {
               </Grid>
 
               <div className="extraPadding" >
-              <FormControl variant="outlined" className="formControl">
-                <InputLabel htmlFor="outlined-age-native-simple">Time Interval after which I will check for slots repeatedly is</InputLabel>
-                <Select
-                  native
-                  onChange={this.onTimeChange}
-                  value={this.state.time}
-                  fullWidth={true}
-                  label="time"
-                  inputProps={{
-                    name: 'time',
-                    id: 'adfaf',
-                  }}
+                <FormControl variant="outlined" className="formControl">
+                  {/* Polling Time selector */}
 
-                >
-                  <option aria-label="None" value="" />
-                  <option value={5000}>5 Seconds</option>
-                  <option value={10000}>10 Seconds</option>
-                  <option value={30000}>30 Seconds</option>
-                  <option value={60000}>1 Minute</option>
-                  <option value={300000}>5 Minutes</option>
-                  <option value={600000}>10 Minutes</option>
-                </Select>
-              </FormControl>
-          </div>
+                  <InputLabel htmlFor="outlined-age-native-simple">Time Interval after which I will check for slots repeatedly is</InputLabel>
+                  <Select
+                    native
+                    onChange={this.onTimeChange}
+                    value={this.state.time}
+                    fullWidth={true}
+                    label="time"
+                    inputProps={{
+                      name: 'time',
+                      id: 'adfaf',
+                    }}
+
+                  >
+                    <option aria-label="None" value="" />
+                    <option value={5000}>5 Seconds</option>
+                    <option value={10000}>10 Seconds</option>
+                    <option value={30000}>30 Seconds</option>
+                    <option value={60000}>1 Minute</option>
+                    <option value={300000}>5 Minutes</option>
+                    <option value={600000}>10 Minutes</option>
+                  </Select>
+                </FormControl>
+              </div>
 
               <Grid container>
                 <Grid className="gridItem" item xs={12} sm={6}>
                   <div className="extraPadding">
                     <FormControl variant="outlined" className="formControl">
+                      {/* Dose selector */}
                       <InputLabel htmlFor="outlined-age-native-simple">Select Dose</InputLabel>
                       <Select
                         native
@@ -552,7 +584,8 @@ class App extends Component {
                 </Grid>
                 <Grid className="gridItem" item xs={12} sm={6}>
                   <div className="extraPadding">
-                  <div className="topMargin" />
+                    <div className="topMargin" />
+                    {/* Form button */}
                     <Button size="large" className="topMargin formControl-half" variant="contained" color="primary" onClick={this.onButtonClicked}>Start Checking</Button>
 
                   </div>
@@ -566,10 +599,10 @@ class App extends Component {
 
               <div className="topMargin" />
               <div className="topMargin" />
-      <Typography color="textSecondary"> * We hereby inform you that we do not store above information on any kind of our servers.
-</Typography>
+              <Typography color="textSecondary"> * We hereby inform you that we do not store above information on any kind of our servers.
+              </Typography>
 
-    </div>
+            </div>
 
           </Grid>
 
@@ -598,7 +631,7 @@ class App extends Component {
           </div>
 
         </div>
-        {/* end of wrapping div of the form body */}
+
 
 
       </div>
